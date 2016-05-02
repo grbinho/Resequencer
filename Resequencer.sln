@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Resequencer", "src\Resequencer\Resequencer.csproj", "{5E69AE60-E065-466E-A585-F0BA12CCD3E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageProducer", "src\MessageProducer\MessageProducer.csproj", "{49272890-CBE3-408F-84F4-F06BB2F7E9CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntermediateProcessor", "src\IntermediateProcessor\IntermediateProcessor.csproj", "{2CF88C84-13B1-40D6-AE66-0E7F837C7714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarefulConsumer", "src\CarefulConsumer\CarefulConsumer.csproj", "{7CD48820-28DA-47F4-9737-210B78954CDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E69AE60-E065-466E-A585-F0BA12CCD3E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E69AE60-E065-466E-A585-F0BA12CCD3E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E69AE60-E065-466E-A585-F0BA12CCD3E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E69AE60-E065-466E-A585-F0BA12CCD3E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49272890-CBE3-408F-84F4-F06BB2F7E9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49272890-CBE3-408F-84F4-F06BB2F7E9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49272890-CBE3-408F-84F4-F06BB2F7E9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49272890-CBE3-408F-84F4-F06BB2F7E9CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CF88C84-13B1-40D6-AE66-0E7F837C7714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CF88C84-13B1-40D6-AE66-0E7F837C7714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CF88C84-13B1-40D6-AE66-0E7F837C7714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CF88C84-13B1-40D6-AE66-0E7F837C7714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CD48820-28DA-47F4-9737-210B78954CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CD48820-28DA-47F4-9737-210B78954CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CD48820-28DA-47F4-9737-210B78954CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CD48820-28DA-47F4-9737-210B78954CDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
