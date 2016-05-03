@@ -19,7 +19,7 @@ namespace IntermediateProcessor
 		private readonly double PercentageOfDelay = 10;
 		private readonly Random RandomGenerator = new Random();
 		private readonly Random RandomDelayGenerator = new Random();
-		private int DequeueWaitLenght = 0;	
+		private int DequeueWaitLength = 0;	
 		private readonly QueueRequestOptions RequestOptions;
 
 		public Processor(string storageConnectionString, string inputQueueName, string outputQueueName)
@@ -75,12 +75,12 @@ namespace IntermediateProcessor
 
 				if(inputQueueMessage == null)
 				{
-					Console.WriteLine($"{ProcessId}\tEmpty queue. Waiting {DequeueWaitLenght}ms.");
-					Thread.Sleep(DequeueWaitLenght);
-					DequeueWaitLenght += 100;
-					if (DequeueWaitLenght > 30000)
+					Console.WriteLine($"{ProcessId}\tEmpty queue. Waiting {DequeueWaitLength}ms.");
+					Thread.Sleep(DequeueWaitLength);
+					DequeueWaitLength += 100;
+					if (DequeueWaitLength > 30000)
 					{
-						DequeueWaitLenght = 30000;
+						DequeueWaitLength = 30000;
 					}
 
 					continue;
@@ -100,7 +100,7 @@ namespace IntermediateProcessor
 				InputQueue.DeleteMessage(inputQueueMessage);
 				
 				//Since we processed something, reset dequeue wait.							
-				DequeueWaitLenght = 0;				
+				DequeueWaitLength = 0;				
 			}
 		}
 	}
