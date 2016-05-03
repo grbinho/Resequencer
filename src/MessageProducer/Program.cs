@@ -45,7 +45,13 @@ namespace MessageProducer
 				var groupId = Guid.NewGuid().ToString();
 
 				for(var i = 1; i<=sequenceLength; i++) { 	
-					var header = new MessageHeader(groupId, i, i == sequenceLength);
+					var header = new MessageHeader
+					{
+						GroupId = groupId,
+						SequenceNumber = i,
+						End = i == sequenceLength
+					};
+
 					var message = new Message<object>(header, new
 					{
 						Test = "Test parameter for test payload!"

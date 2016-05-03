@@ -1,4 +1,4 @@
-# Resequencer
+# Resequencer [WIP]
 Library for resequencing messages that arrive out of sequence.
 
 Examples in this repository have been build using Azure Web Jobs, but library should be general 
