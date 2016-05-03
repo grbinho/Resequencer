@@ -11,6 +11,7 @@ namespace IntermediateProcessor
 		private readonly string StorageConnectionString;
 		private readonly string InputQueueName;
 		private readonly string OutputQueueName;
+		private readonly string ProcessId;
 		private readonly CloudQueue InputQueue;
 		private readonly CloudQueue OutputQueue;
 		private readonly CloudQueueClient QueueClient;
@@ -41,6 +42,7 @@ namespace IntermediateProcessor
 			StorageConnectionString = storageConnectionString;
 			InputQueueName = inputQueueName.ToLowerInvariant();
 			OutputQueueName = outputQueueName.ToLowerInvariant();
+			ProcessId = Guid.NewGuid().ToString();
 
 			RequestOptions = new QueueRequestOptions
 			{
@@ -65,16 +67,15 @@ namespace IntermediateProcessor
 		public void Process(CancellationToken cancellationToken)
 		{
 			OutputQueue.CreateIfNotExists();
+			Console.WriteLine($"{ProcessId}\tProcessor started.");
 
 			while (!cancellationToken.IsCancellationRequested)
 			{
-				Console.WriteLine("$Processing message.");
-
 				var inputQueueMessage = InputQueue.GetMessage();
 
 				if(inputQueueMessage == null)
 				{
-					Console.WriteLine($"Empty queue. Waiting {DequeueWaitLenght}ms.");
+					Console.WriteLine($"{ProcessId}\tEmpty queue. Waiting {DequeueWaitLenght}ms.");
 					Thread.Sleep(DequeueWaitLenght);
 					DequeueWaitLenght += 100;
 					if (DequeueWaitLenght > 30000)
@@ -86,16 +87,19 @@ namespace IntermediateProcessor
 				}
 
 				//Check if we need to delay
-				if (ShouldDelay())				
+				if (ShouldDelay())
+				{					
 					Thread.Sleep(RandomDelayGenerator.Next(10, 100));
-
+					Console.WriteLine($"{ProcessId}\tDelayed message");
+				}		
+					
 				//Put message to output queue
 				OutputQueue.AddMessage(inputQueueMessage);
 
 				//Delete the message
 				InputQueue.DeleteMessage(inputQueueMessage);
 				
-				Console.WriteLine($"Message detected, restarting processing.");
+				//Since we processed something, reset dequeue wait.							
 				DequeueWaitLenght = 0;				
 			}
 		}

@@ -8,5 +8,6 @@ namespace IntermediateProcessor
 		public static string RedisConnectionString => ConfigurationManager.AppSettings["RedisConnectionString"];
 		public static string InputQueueName => ConfigurationManager.AppSettings["InputQueueName"];
 		public static string OutputQueueName => ConfigurationManager.AppSettings["OutputQueueName"];
+		public static int NumberOfProcessors => int.Parse(ConfigurationManager.AppSettings["NumberOfProcessors"]);
 	}
 }

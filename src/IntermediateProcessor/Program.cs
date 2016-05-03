@@ -1,4 +1,5 @@
 ﻿using System.Threading;
+using System.Threading.Tasks;
 using static System.Console;
 
 namespace IntermediateProcessor
@@ -16,12 +17,23 @@ namespace IntermediateProcessor
 			WriteLine($"Redis connection string: {Configuration.RedisConnectionString}");
 			WriteLine($"Input queue name: {Configuration.InputQueueName}");
 			WriteLine($"Output queue name: {Configuration.OutputQueueName}");
+			WriteLine($"Number of processors: {Configuration.NumberOfProcessors}");
 
-
-			var processor = new Processor(Configuration.StorageAccountConnectionString, Configuration.InputQueueName, Configuration.OutputQueueName);
 			var cancellationToken = new CancellationToken();
+			Task[] processors = new Task[Configuration.NumberOfProcessors];
 
-			processor.Process(cancellationToken);
+			for(int i = 0; i < Configuration.NumberOfProcessors; i++)
+			{
+				var task = new Task(() => {					
+					var processor = new Processor(Configuration.StorageAccountConnectionString, Configuration.InputQueueName, Configuration.OutputQueueName);
+					processor.Process(cancellationToken);
+					}, cancellationToken);
+			
+				processors[i] = task;
+				task.Start();
+			}
+
+			Task.WaitAll(processors);		
 		}
 	}
 }
