@@ -16,13 +16,13 @@ namespace IntermediateProcessor
 		private readonly CloudQueue OutputQueue;
 		private readonly CloudQueueClient QueueClient;
 
-		private readonly double PercentageOfDelay = 10;
+		private readonly int PercentageOfDelay;
 		private readonly Random RandomGenerator = new Random();
 		private readonly Random RandomDelayGenerator = new Random();
 		private int DequeueWaitLength = 0;	
 		private readonly QueueRequestOptions RequestOptions;
 
-		public Processor(string storageConnectionString, string inputQueueName, string outputQueueName)
+		public Processor(string storageConnectionString, string inputQueueName, string outputQueueName, int percentageOfDelay = 10)
 		{
 			if (string.IsNullOrWhiteSpace(storageConnectionString))
 			{
@@ -42,6 +42,7 @@ namespace IntermediateProcessor
 			StorageConnectionString = storageConnectionString;
 			InputQueueName = inputQueueName.ToLowerInvariant();
 			OutputQueueName = outputQueueName.ToLowerInvariant();
+            PercentageOfDelay = percentageOfDelay;
 			ProcessId = Guid.NewGuid().ToString();
 
 			RequestOptions = new QueueRequestOptions

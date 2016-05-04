@@ -61,8 +61,9 @@ namespace MessageProducer
 					CloudQueueMessage queueMessage = new CloudQueueMessage(JsonConvert.SerializeObject(message));
 					destinationQueue.AddMessage(queueMessage);
 
-					WriteLine(header.ToString());
-				}				
+					WriteLine($"GroupId: {header.GroupId}, Seq: {header.SequenceNumber}, End: {header.End}");
+
+                }				
 
 				Thread.Sleep(RandomDelayGenerator.Next(500, MaxDelay));
 

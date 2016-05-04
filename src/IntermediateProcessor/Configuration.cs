@@ -9,5 +9,7 @@ namespace IntermediateProcessor
 		public static string InputQueueName => ConfigurationManager.AppSettings["InputQueueName"];
 		public static string OutputQueueName => ConfigurationManager.AppSettings["OutputQueueName"];
 		public static int NumberOfProcessors => int.Parse(ConfigurationManager.AppSettings["NumberOfProcessors"]);
-	}
+        public static int PercentageOfDelay => int.Parse(ConfigurationManager.AppSettings["PercentageOfDelay"]);
+
+    }
 }

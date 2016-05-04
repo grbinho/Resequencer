@@ -18,6 +18,7 @@ namespace IntermediateProcessor
 			WriteLine($"Input queue name: {Configuration.InputQueueName}");
 			WriteLine($"Output queue name: {Configuration.OutputQueueName}");
 			WriteLine($"Number of processors: {Configuration.NumberOfProcessors}");
+            WriteLine($"Percentage of delay: {Configuration.PercentageOfDelay}");
 
 			var cancellationToken = new CancellationToken();
 			Task[] processors = new Task[Configuration.NumberOfProcessors];
