@@ -50,7 +50,7 @@ namespace Resequencer
 			//We should handle all buffered messages that are available.
 			//Those are all messages that are buffered and their sequence number
 			//is bigger that current sequence number stored.
-			var bufferedMessages = StateStore.GetBufferedMessages<object>();
+			var bufferedMessages = StateStore.GetBufferedMessages();
 
 			foreach(var bufferedMessage in bufferedMessages)
 			{
@@ -91,7 +91,7 @@ namespace Resequencer
 			}
 			//If message sequence number - currentMessage.SequenceNumber == 1.
 			//This message is next in sequence.
-			if(currentMessage.SequenceNumber - message.Header.SequenceNumber == 1)
+			if(message.Header.SequenceNumber - currentMessage.SequenceNumber == 1)
 			{
 				return true;
 			}

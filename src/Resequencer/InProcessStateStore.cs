@@ -39,7 +39,14 @@ namespace Resequencer
 					var groupCurrentSequence = CurrenSequenceCache[groupId];
 					var groupMessageBuffer = MessageBuffer[groupId];
 
-					var currentBufferedMessage = groupMessageBuffer.First();
+					var currentBufferedMessage = groupMessageBuffer.FirstOrDefault();
+
+                    if(currentBufferedMessage == null)
+                    {
+                        MessageBuffer.Remove(groupId);
+                        continue;
+                    }
+
 					var previousBufferedMessage = default(Message<object>);
 					var shouldContinue = currentBufferedMessage.Header.SequenceNumber - groupCurrentSequence.SequenceNumber == 1;
 
@@ -48,9 +55,15 @@ namespace Resequencer
 						listOfMessages.Add(currentBufferedMessage);
 						groupMessageBuffer.Remove(currentBufferedMessage);
 						previousBufferedMessage = currentBufferedMessage;
-						currentBufferedMessage = groupMessageBuffer.First();
+						currentBufferedMessage = groupMessageBuffer.FirstOrDefault();
 
-						shouldContinue = currentBufferedMessage.Header.SequenceNumber - previousBufferedMessage.Header.SequenceNumber == 1;
+                        if (currentBufferedMessage == null)
+                        {
+                            MessageBuffer.Remove(groupId);
+                            break;
+                        }
+
+                        shouldContinue = currentBufferedMessage.Header.SequenceNumber - previousBufferedMessage.Header.SequenceNumber == 1;
 					}
 				}
 			}

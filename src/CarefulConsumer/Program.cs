@@ -4,6 +4,7 @@ using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage;
 using Newtonsoft.Json;
 using System.Threading;
+using Resequencer;
 
 namespace CarefulConsumer
 {
@@ -32,6 +33,12 @@ namespace CarefulConsumer
 			//Create queue if it does not exist (rules of azure queues, say that it needs to be lower
 			CloudQueue inputQueue = queueClient.GetQueueReference(Configuration.InputQueueName.ToLowerInvariant());
 
+            var resequencer = new Resequencer.Resequencer(new InProcessStateStore());
+            resequencer.Subscribe((message) =>
+            {
+                WriteLine(message.Header.ToString());
+                return true;
+            });
 
 			do
 			{
@@ -40,7 +47,7 @@ namespace CarefulConsumer
 
 				if(inputMessages == null || !inputMessages.Any())
 				{
-					WriteLine($"No messages in the queue, waiting for: {dequeueWaitLength}ms");
+					//WriteLine($"No messages in the queue, waiting for: {dequeueWaitLength}ms");
 					//If there are no messages, wait a bit
 					Thread.Sleep(dequeueWaitLength);
 					dequeueWaitLength += 100;
@@ -54,11 +61,9 @@ namespace CarefulConsumer
 
 				foreach(var queueMessage in inputMessages)
 				{
-					var message = JsonConvert.DeserializeObject<Message<object>>(queueMessage.AsString);
-					//At this momen we will just dequeue and delete the messages.
-					inputQueue.DeleteMessage(queueMessage);
-
-					WriteLine($"Message processed. Group Id: {message.Header.GroupId}, Seq: {message.Header.SequenceNumber}, End: {message.Header.End}");
+					var message = JsonConvert.DeserializeObject<Message<object>>(queueMessage.AsString);                    
+                    resequencer.AddMessage(message);
+					inputQueue.DeleteMessage(queueMessage);					
 				}				
 
 				dequeueWaitLength = 0;
