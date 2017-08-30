@@ -11,6 +11,6 @@ This library is not concerned with that.
 
 ## Configuration
 
-Configuration of connection strings and other sensitive data should be put into AppSettings.config. There should be is one 
+Configuration of connection strings and other sensitive data should be put into AppSettings.config. There should be one 
 AppSettings.config for every console application in the solution. That file is not provided with the solution. 
 You have to add it yourself.
